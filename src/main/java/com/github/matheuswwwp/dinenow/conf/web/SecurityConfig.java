@@ -53,13 +53,8 @@ public class SecurityConfig {
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                         )).
                 authorizeHttpRequests(
-                        authorizeHttpRequests -> authorizeHttpRequests.
-                                requestMatchers(
-                                        "/auth/signin",
-                                        "/auth/refreshToken/**"
-                                ).permitAll()
-                                .requestMatchers("/person/**").authenticated()
-                                .requestMatchers("/users").denyAll()
+                        authorizeHttpRequests -> authorizeHttpRequests
+                                .requestMatchers("/**").permitAll()
                 ).
                 cors(cors -> {}).
                 build();

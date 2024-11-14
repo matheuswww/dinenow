@@ -38,13 +38,12 @@ public class JwtTokenProvider {
         algorithm = Algorithm.HMAC512(secretKey.getBytes());
     }
 
-    public TokenVO createAccessToken(String username, List<String> roles) {
+    public Token createAccessToken(String username, List<String> roles) {
         Date now = new Date();
         var validity = new Date(now.getTime() + validityInMilliseconds);
         var accessToken = getRefreshToken(username, roles, now, validity);
         var refreshToken = getAccessToken(username, roles, now);
-        return new TokenVO(username, true, accessToken, refreshToken, validity, now);
-
+        return new Token(username, true, accessToken, refreshToken, validity, now);
     }
 
     private String getAccessToken(String username, List<String> roles, Date now) {

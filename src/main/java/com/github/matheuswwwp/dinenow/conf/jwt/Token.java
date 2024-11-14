@@ -3,7 +3,7 @@ package com.github.matheuswwwp.dinenow.conf.jwt;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TokenVO implements Serializable {
+public class Token implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String username;
@@ -13,9 +13,9 @@ public class TokenVO implements Serializable {
     private String accessToken;
     private String refreshToken;
 
-    public TokenVO() {}
+    public Token() {}
 
-    public TokenVO(String username, Boolean authenticated, String accessToken, String refreshToken, Date expiration, Date created) {
+    public Token(String username, Boolean authenticated, String accessToken, String refreshToken, Date expiration, Date created) {
         this.username = username;
         this.authenticated = authenticated;
         this.accessToken = accessToken;

@@ -1,19 +1,46 @@
 package com.github.matheuswwwp.dinenow.controller.auth;
 
+import com.github.matheuswwwp.dinenow.DTO.user.UserSigninDTO;
+import com.github.matheuswwwp.dinenow.DTO.user.UserSignupDTO;
+import com.github.matheuswwwp.dinenow.conf.CustomValidator.CustomValidator;
+import com.github.matheuswwwp.dinenow.conf.CustomValidator.RestResponse;
+import com.github.matheuswwwp.dinenow.conf.mapper.Mapper;
+import com.github.matheuswwwp.dinenow.model.user.User;
 import com.github.matheuswwwp.dinenow.service.auth.AuthService;
+
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     @Autowired
     private AuthService authService;
 
-    @PostMapping("/authenticate")
-    public String authenticate() {
-        return authService.authenticate();
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public RestResponse handleValidationException(MethodArgumentNotValidException ex) {
+        return new CustomValidator().getMessage(ex);
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> signin(@RequestBody @Valid UserSigninDTO data) {
+        logger.info("Signin - init signin");
+        var userModel = Mapper.parseObject(data, User.class);
+        return authService.signin(userModel);
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> signup(@RequestBody @Valid UserSignupDTO data) {
+        logger.info("Signup - init signup");
+        var userModel = Mapper.parseObject(data, User.class);
+        return authService.signup(userModel);
     }
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a29e68bc-0774-46a5-bb41-3beef192c940" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/DTO/user/UserSignupDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/conf/mapper/Mapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/conf/jwt/JwtTokenFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/conf/jwt/JwtTokenFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/conf/jwt/JwtTokenProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/conf/jwt/JwtTokenProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/conf/jwt/TokenVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/conf/jwt/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/conf/web/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/conf/web/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/controller/auth/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/controller/auth/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/exception/customException/CustomizedResponseEntityException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/exception/customException/ExceptionResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/exception/customException/ExceptionResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/model/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/model/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/repository/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/repository/user/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/service/auth/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/java/com/github/matheuswwwp/dinenow/service/auth/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/resources/db/migration/V1__user.sql" beforeDir="false" afterPath="$PROJECT_DIR$/main/resources/db/migration/V1__user.sql" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "matheuswww"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/matheuswww/dinenow.git",
+    "accountId": "1ac18c09-b025-40fd-a9b1-ef87ef17fd52"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2or9p0GQ44MPWOpCZeJHPZC1SVT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/virus/IdeaProjects/dinenow"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a29e68bc-0774-46a5-bb41-3beef192c940" name="Changes" comment="" />
+      <created>1731617007284</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1731617007284</updated>
+    </task>
+    <servers />
+  </component>
+</project>

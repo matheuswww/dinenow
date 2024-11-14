@@ -1,4 +1,4 @@
-package com.github.matheuswwwp.dinenow.exception.jwt;
+package com.github.matheuswwwp.dinenow.conf.exception.jwt;
 
 import javax.naming.AuthenticationException;
 
