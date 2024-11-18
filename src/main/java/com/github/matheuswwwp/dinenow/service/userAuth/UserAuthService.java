@@ -1,4 +1,4 @@
-package com.github.matheuswwwp.dinenow.service.auth;
+package com.github.matheuswwwp.dinenow.service.userAuth;
 
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.HttpMessages;
 import com.github.matheuswwwp.dinenow.conf.jwt.JwtTokenProvider;
@@ -14,14 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AuthService {
-    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
+public class UserAuthService {
+    private static final Logger logger = LoggerFactory.getLogger(UserAuthService.class);
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -35,6 +34,10 @@ public class AuthService {
         try {
             var email = data.getEmail();
             var password = data.getPassword();
+            var user = repository.findByUserEmail(email);
+            if (user.isEmpty()) {
+                throw new BadCredentialsException("invalid credentials");
+            }
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(email,password)
             );
@@ -59,7 +62,7 @@ public class AuthService {
             repository.save(data);
             var tokenResponse = tokenProvider.createAccessToken(data.getEmail(), List.of());
             logger.info("Signup - success");
-            return ResponseEntity.ok(tokenResponse);
+            return ResponseEntity.status(HttpStatus.CREATED).body(tokenResponse);
         } catch (EmailAlreadyRegistredException e) {
             logger.error("Signup - error trying signup: {}", e.getMessage());
             return new ResponseEntity<>(new RestResponse("email já cadastrado", HttpStatus.CONFLICT.value(), HttpMessages.conflict, null), HttpStatus.CONFLICT);

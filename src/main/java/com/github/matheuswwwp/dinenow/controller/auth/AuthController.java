@@ -6,7 +6,7 @@ import com.github.matheuswwwp.dinenow.conf.CustomValidator.CustomValidator;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.RestResponse;
 import com.github.matheuswwwp.dinenow.conf.mapper.Mapper;
 import com.github.matheuswwwp.dinenow.model.user.User;
-import com.github.matheuswwwp.dinenow.service.auth.AuthService;
+import com.github.matheuswwwp.dinenow.service.userAuth.UserAuthService;
 
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     @Autowired
-    private AuthService authService;
+    private UserAuthService authService;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)

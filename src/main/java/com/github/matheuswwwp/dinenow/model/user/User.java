@@ -1,14 +1,12 @@
 package com.github.matheuswwwp.dinenow.model.user;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 
 import java.util.Objects;
 
 @Entity
-@Table(name = "user")
+@Table(name = "userTest")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
