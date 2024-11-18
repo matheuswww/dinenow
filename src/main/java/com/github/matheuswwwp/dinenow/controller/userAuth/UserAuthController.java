@@ -1,4 +1,4 @@
-package com.github.matheuswwwp.dinenow.controller.auth;
+package com.github.matheuswwwp.dinenow.controller.userAuth;
 
 import com.github.matheuswwwp.dinenow.DTO.user.UserSigninDTO;
 import com.github.matheuswwwp.dinenow.DTO.user.UserSignupDTO;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
-public class AuthController {
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+@RequestMapping("/user/auth")
+public class UserAuthController {
+    private static final Logger logger = LoggerFactory.getLogger(UserAuthController.class);
     @Autowired
     private UserAuthService authService;
 
