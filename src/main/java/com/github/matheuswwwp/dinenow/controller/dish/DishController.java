@@ -1,11 +1,12 @@
-package com.github.matheuswwwp.dinenow.controller.userAuth;
+package com.github.matheuswwwp.dinenow.controller.dish;
 
-import com.github.matheuswwwp.dinenow.DTO.admin.AdminSigninDTO;
+import com.github.matheuswwwp.dinenow.DTO.dish.DishDTO;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.CustomValidator;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.RestResponse;
+import com.github.matheuswwwp.dinenow.conf.jwt.JwtTokenProvider;
 import com.github.matheuswwwp.dinenow.conf.mapper.Mapper;
-import com.github.matheuswwwp.dinenow.model.admin.Admin;
-import com.github.matheuswwwp.dinenow.service.adminAuth.AdminAuthService;
+import com.github.matheuswwwp.dinenow.model.dish.Dish;
+import com.github.matheuswwwp.dinenow.service.dish.DishService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +17,13 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin/auth")
-public class AdminAuthController {
-    private static final Logger logger = LoggerFactory.getLogger(AdminAuthController.class);
+@RequestMapping("/dish")
+public class DishController {
+    private static final Logger logger = LoggerFactory.getLogger(DishController.class);
+    private JwtTokenProvider tokenProvider;
+
     @Autowired
-    private AdminAuthService authService;
+    private DishService dishService;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -28,10 +31,10 @@ public class AdminAuthController {
         return new CustomValidator().getMessage(ex);
     }
 
-    @PostMapping("/signin")
-    public ResponseEntity<?> signin(@RequestBody @Valid AdminSigninDTO data) {
-        logger.info("Signin - init signin");
-        var adminModel = Mapper.parseObject(data, Admin.class);
-        return authService.signin(adminModel);
+    @PostMapping(value = "/createDish", consumes = "multipart/form-data")
+    public ResponseEntity<?> CreateDish(@ModelAttribute @Valid DishDTO data) {
+        logger.info("CreateDish - init CreateDish");
+        var dishModel = Mapper.parseObject(data, Dish.class);
+        return dishService.CreateDish(dishModel, data.getFile());
     }
 }

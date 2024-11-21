@@ -54,7 +54,9 @@ public class SecurityConfig {
                         )).
                 authorizeHttpRequests(
                         authorizeHttpRequests -> authorizeHttpRequests
-                                .requestMatchers("/**").permitAll()
+                                .requestMatchers("/dish/createDish").hasAuthority("ADMIN")
+                                .requestMatchers("/user/auth/**").permitAll()
+                                .requestMatchers("/admin/auth/**").permitAll()
                 ).
                 cors(cors -> {}).
                 build();
