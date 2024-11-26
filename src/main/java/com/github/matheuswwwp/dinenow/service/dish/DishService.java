@@ -18,6 +18,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.UUID;
+
 @Service
 public class DishService {
     @Autowired
@@ -58,6 +62,26 @@ public class DishService {
             return new ResponseEntity<>(new RestResponse("limite de páginas ou items excedidos", HttpStatus.BAD_REQUEST.value(), HttpMessages.bad_request, null), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             logger.error("GetAllDish - error trying GetAllDish: {}", e.getMessage());
+            return new ResponseEntity<>(new RestResponse("server error", HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpMessages.server_error, null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<?> GetById(String id) {
+        try {
+            var dishRepo = dishRepository.findById(UUID.fromString(id));
+            if(dishRepo.isEmpty()) {
+                return new ResponseEntity<>(new RestResponse("nenhum prato foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
+            }
+            var dishDTO = Mapper.parseListObjects(dishRepo.stream().toList(), GetAllDishDTO.class);
+            getDishImages.GetDishImages(dishDTO);
+            logger.info("GetDishById - dish get with success");
+            return ResponseEntity.status(HttpStatus.OK).body(dishDTO.get(0));
+        } catch (IllegalArgumentException e) {
+            logger.error("GetDishById - error trying GetDishById: {}", e.getMessage());
+            return new ResponseEntity<>(new RestResponse("id inválido", HttpStatus.BAD_REQUEST.value(), HttpMessages.bad_request, null), HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e) {
+            logger.error("GetDishById - error trying GetDishById: {}", e.getMessage());
             return new ResponseEntity<>(new RestResponse("server error", HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpMessages.server_error, null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

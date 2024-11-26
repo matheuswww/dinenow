@@ -43,4 +43,10 @@ public class DishController {
         logger.info("GetAllDish - init GetAllDish");
         return dishService.GetAllDish(pages, items);
     }
+
+    @GetMapping(value = "/getById")
+    public ResponseEntity<?> GetById(@RequestParam String id) {
+        logger.info("GetById - init GetById");
+        return dishService.GetById(id);
+    }
 }
