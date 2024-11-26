@@ -24,7 +24,7 @@ public class File {
 
     @GetMapping("/{folder}/{filename}")
     public ResponseEntity<?> getImage(@PathVariable String folder, @PathVariable String filename) {
-        logger.error("File - init GetF");
+        logger.error("File - init GetFile");
         try {
             Path path = Paths.get("src/main/resources/upload/").resolve(folder).resolve(filename);
             if (!path.toFile().exists()) {

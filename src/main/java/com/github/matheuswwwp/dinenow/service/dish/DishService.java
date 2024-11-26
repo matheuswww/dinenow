@@ -1,6 +1,6 @@
 package com.github.matheuswwwp.dinenow.service.dish;
 
-import com.github.matheuswwwp.dinenow.DTO.dish.GetAllDishDTO;
+import com.github.matheuswwwp.dinenow.DTO.dish.GetDishDTO;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.HttpMessages;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.RestResponse;
 import com.github.matheuswwwp.dinenow.conf.exception.customException.dish.PaginationExceeded;
@@ -18,8 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.UUID;
 
 @Service
@@ -53,7 +51,7 @@ public class DishService {
                 return new ResponseEntity<>(new RestResponse("nenhum prato foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
             }
             var dishList = dishRepo.toList();
-            var dishDTO = Mapper.parseListObjects(dishList, GetAllDishDTO.class);
+            var dishDTO = Mapper.parseListObjects(dishList, GetDishDTO.class);
             getDishImages.GetDishImages(dishDTO);
             logger.info("GetAllDish - dish get with success");
             return ResponseEntity.status(HttpStatus.OK).body(dishDTO);
@@ -72,7 +70,7 @@ public class DishService {
             if(dishRepo.isEmpty()) {
                 return new ResponseEntity<>(new RestResponse("nenhum prato foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
             }
-            var dishDTO = Mapper.parseListObjects(dishRepo.stream().toList(), GetAllDishDTO.class);
+            var dishDTO = Mapper.parseListObjects(dishRepo.stream().toList(), GetDishDTO.class);
             getDishImages.GetDishImages(dishDTO);
             logger.info("GetDishById - dish get with success");
             return ResponseEntity.status(HttpStatus.OK).body(dishDTO.get(0));

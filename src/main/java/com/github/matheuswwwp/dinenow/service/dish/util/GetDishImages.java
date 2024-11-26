@@ -1,6 +1,6 @@
 package com.github.matheuswwwp.dinenow.service.dish.util;
 
-import com.github.matheuswwwp.dinenow.DTO.dish.GetAllDishDTO;
+import com.github.matheuswwwp.dinenow.DTO.dish.GetDishDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +16,8 @@ public class GetDishImages {
     @Value("${url}")
     private String url;
 
-    public void GetDishImages(List<GetAllDishDTO> dishes) {
-        for (GetAllDishDTO dish: dishes) {
+    public void GetDishImages(List<GetDishDTO> dishes) {
+        for (GetDishDTO dish: dishes) {
             File folder = new File(path+dish.getId());
             List<String> links = dish.getImages();
             if(folder.exists() && folder.isDirectory()) {

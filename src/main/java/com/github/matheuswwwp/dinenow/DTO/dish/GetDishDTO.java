@@ -3,7 +3,7 @@ package com.github.matheuswwwp.dinenow.DTO.dish;
 import java.util.List;
 import java.util.Objects;
 
-public class GetAllDishDTO {
+public class GetDishDTO {
     private String id;
     private Float price;
     private String name;
@@ -53,7 +53,7 @@ public class GetAllDishDTO {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        GetAllDishDTO that = (GetAllDishDTO) o;
+        GetDishDTO that = (GetDishDTO) o;
         return Objects.equals(id, that.id) && Objects.equals(price, that.price) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(images, that.images);
     }
 
