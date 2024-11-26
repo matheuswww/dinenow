@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 public class CreateDishTest {
@@ -38,7 +39,7 @@ public class CreateDishTest {
         MultipartFile file = new MockMultipartFile("file", imagePath.getFileName().toString(), "image/jpg", imageBytes);
         MultipartFile[] files = new MultipartFile[]{file};
         Float price = 10F;
-        Dish dish = new Dish("test", price, "test", "test");
+        Dish dish = new Dish(UUID.fromString("test"), price, "test", "test");
         Mockito.when(repository.save(dish)).thenReturn(dish);
         when(fileUpload.handle(Mockito.any(MultipartFile[].class), Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(ResponseEntity.status(HttpStatus.CREATED).body(null));
