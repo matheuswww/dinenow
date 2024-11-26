@@ -33,13 +33,14 @@ public class CreateDishTest {
 
     @Test
     public void success() throws IOException {
+        var uuid = UUID.randomUUID();
         Path imgDirectory = Paths.get("./src/test/java/dishTest/img");System.out.println("Diretório de trabalho atual: " + System.getProperty("user.dir"));
         Path imagePath = imgDirectory.resolve("dish.jpg");
         byte[] imageBytes = Files.readAllBytes(imagePath);
         MultipartFile file = new MockMultipartFile("file", imagePath.getFileName().toString(), "image/jpg", imageBytes);
         MultipartFile[] files = new MultipartFile[]{file};
         Float price = 10F;
-        Dish dish = new Dish(UUID.fromString("test"), price, "test", "test");
+        Dish dish = new Dish(uuid, price, "test", "test");
         Mockito.when(repository.save(dish)).thenReturn(dish);
         when(fileUpload.handle(Mockito.any(MultipartFile[].class), Mockito.anyString(), Mockito.anyString()))
                 .thenReturn(ResponseEntity.status(HttpStatus.CREATED).body(null));

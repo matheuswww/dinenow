@@ -33,9 +33,10 @@ public class GetAll {
 
     @Test
     public void success() {
+        var uuid = UUID.randomUUID();
         List<Dish> mockDishes = new ArrayList<>();
-        mockDishes.add(new Dish(UUID.fromString("test"), 10F, "test", "test"));
-        mockDishes.add(new Dish(UUID.fromString("test"), 10F, "test", "test"));
+        mockDishes.add(new Dish(uuid, 10F, "test", "test"));
+        mockDishes.add(new Dish(uuid, 10F, "test", "test"));
         Page<Dish> mockPage = new PageImpl<>(mockDishes);
         Mockito.when(repository.findAll(PageRequest.of(0, 10))).thenReturn(mockPage);
         var res = service.GetAllDish(0,10);
