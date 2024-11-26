@@ -1,6 +1,6 @@
 package com.github.matheuswwwp.dinenow.controller.dish;
 
-import com.github.matheuswwwp.dinenow.DTO.dish.DishDTO;
+import com.github.matheuswwwp.dinenow.DTO.dish.CreateDishDTO;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.CustomValidator;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.RestResponse;
 import com.github.matheuswwwp.dinenow.conf.jwt.JwtTokenProvider;
@@ -32,9 +32,15 @@ public class DishController {
     }
 
     @PostMapping(value = "/createDish", consumes = "multipart/form-data")
-    public ResponseEntity<?> CreateDish(@ModelAttribute @Valid DishDTO data) {
+    public ResponseEntity<?> CreateDish(@ModelAttribute @Valid CreateDishDTO data) {
         logger.info("CreateDish - init CreateDish");
         var dishModel = Mapper.parseObject(data, Dish.class);
         return dishService.CreateDish(dishModel, data.getFile());
+    }
+
+    @GetMapping(value = "/getAll")
+    public ResponseEntity<?> GetAllDish(@RequestParam int pages, @RequestParam int items) {
+        logger.info("GetAllDish - init GetAllDish");
+        return dishService.GetAllDish(pages, items);
     }
 }
