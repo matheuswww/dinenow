@@ -17,7 +17,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class updateDish {
+public class updateDishTest {
     @InjectMocks
     private DishService service;
     @Mock
