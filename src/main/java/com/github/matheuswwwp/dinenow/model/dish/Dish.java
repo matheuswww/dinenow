@@ -16,6 +16,7 @@ public class Dish {
     private Float price;
     private String name;
     private String description;
+    private Boolean active;
 
     public Dish() {}
 
@@ -58,15 +59,23 @@ public class Dish {
         this.description = description;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Dish dine = (Dish) o;
-        return Objects.equals(id, dine.id) && Objects.equals(price, dine.price) && Objects.equals(name, dine.name) && Objects.equals(description, dine.description);
+        Dish dish = (Dish) o;
+        return Objects.equals(id, dish.id) && Objects.equals(price, dish.price) && Objects.equals(name, dish.name) && Objects.equals(description, dish.description) && Objects.equals(active, dish.active);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, price, name, description);
+        return Objects.hash(id, price, name, description, active);
     }
 }

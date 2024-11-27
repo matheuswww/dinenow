@@ -2,5 +2,6 @@ CREATE TABLE IF NOT EXISTS `dish` (
   `id` VARCHAR(36) PRIMARY KEY,
   `price` INT NOT NULL,
   `name` VARCHAR(50) NOT NULL,
-  `description` VARCHAR(200) NOT NULL
+  `description` VARCHAR(200) NOT NULL,
+  `active` BOOLEAN NOT NULL
 );

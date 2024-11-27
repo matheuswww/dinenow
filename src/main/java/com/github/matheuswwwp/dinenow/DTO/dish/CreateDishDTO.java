@@ -1,18 +1,12 @@
 package com.github.matheuswwwp.dinenow.DTO.dish;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public class CreateDishDTO {
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private String id;
-
     @Min(1)
     @Max(1000000000)
     private Float price;
@@ -28,8 +22,8 @@ public class CreateDishDTO {
     @NotNull
     private MultipartFile[] file;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private List<String>  imgLink;
+    @NotNull
+    private boolean active;
 
     public Float getPrice() {
         return price;
@@ -55,29 +49,31 @@ public class CreateDishDTO {
         this.description = description;
     }
 
-    public MultipartFile[] getFile() { return file; }
+    public MultipartFile[] getFile() {
+        return file;
+    }
 
     public void setFile(MultipartFile[] file) {
         this.file = file;
     }
 
-    public String getId() { return id; }
+    public boolean isActive() {
+        return active;
+    }
 
-    public void setId(String id) { this.id = id; }
-
-    public List<String> getImgLink() { return imgLink; }
-
-    public void setImgLink(List<String> imgLink) { this.imgLink = imgLink; }
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        CreateDishDTO createDishDTO = (CreateDishDTO) o;
-        return Objects.equals(id, createDishDTO.id) && Objects.equals(price, createDishDTO.price) && Objects.equals(name, createDishDTO.name) && Objects.equals(description, createDishDTO.description) && Objects.deepEquals(file, createDishDTO.file) && Objects.equals(imgLink, createDishDTO.imgLink);
+        CreateDishDTO that = (CreateDishDTO) o;
+        return active == that.active && Objects.equals(price, that.price) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.deepEquals(file, that.file);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, price, name, description, Arrays.hashCode(file), imgLink);
+        return Objects.hash(price, name, description, Arrays.hashCode(file), active);
     }
 }
