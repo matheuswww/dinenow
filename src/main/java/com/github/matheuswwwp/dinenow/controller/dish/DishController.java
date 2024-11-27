@@ -1,7 +1,9 @@
 package com.github.matheuswwwp.dinenow.controller.dish;
 
 import com.github.matheuswwwp.dinenow.DTO.dish.CreateDishDTO;
+import com.github.matheuswwwp.dinenow.DTO.dish.UpdateDishDTO;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.CustomValidator;
+import com.github.matheuswwwp.dinenow.conf.CustomValidator.HttpMessages;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.RestResponse;
 import com.github.matheuswwwp.dinenow.conf.jwt.JwtTokenProvider;
 import com.github.matheuswwwp.dinenow.conf.mapper.Mapper;
@@ -15,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/dish")
@@ -36,6 +40,19 @@ public class DishController {
         logger.info("CreateDish - init CreateDish");
         var dishModel = Mapper.parseObject(data, Dish.class);
         return dishService.CreateDish(dishModel, data.getFile());
+    }
+
+    @PatchMapping(value = "/updateDish")
+    public ResponseEntity<?> UpdateDish(@RequestBody @Valid UpdateDishDTO data) {
+        logger.info("UpdateDish - init UpdateDish");
+        try {
+            UUID.fromString(data.getId());
+        } catch (IllegalArgumentException e) {
+            logger.error("UpdateDish - error trying UpdateDish: {}", e.getMessage());
+            return new ResponseEntity<>(new RestResponse("id inválido", HttpStatus.BAD_REQUEST.value(), HttpMessages.bad_request, null), HttpStatus.BAD_REQUEST);
+        }
+        var dishModel = Mapper.parseObject(data, Dish.class);
+        return dishService.UpdateDish(dishModel);
     }
 
     @GetMapping(value = "/getAll")

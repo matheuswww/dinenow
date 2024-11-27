@@ -3,6 +3,7 @@ package com.github.matheuswwwp.dinenow.service.dish;
 import com.github.matheuswwwp.dinenow.DTO.dish.GetDishDTO;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.HttpMessages;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.RestResponse;
+import com.github.matheuswwwp.dinenow.conf.exception.customException.dish.NoArgs;
 import com.github.matheuswwwp.dinenow.conf.exception.customException.dish.PaginationExceeded;
 import com.github.matheuswwwp.dinenow.conf.fileUpload.FileUpload;
 import com.github.matheuswwwp.dinenow.conf.mapper.Mapper;
@@ -80,6 +81,27 @@ public class DishService {
         }
         catch (Exception e) {
             logger.error("GetDishById - error trying GetDishById: {}", e.getMessage());
+            return new ResponseEntity<>(new RestResponse("server error", HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpMessages.server_error, null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<?> UpdateDish(Dish dish) {
+        try {
+            if(dish.getActive() == null && dish.getPrice() == null) {
+                throw new NoArgs();
+            }
+            var dishRepo = dishRepository.findById(dish.getId());
+            if(dishRepo.isEmpty()) {
+                return new ResponseEntity<>(new RestResponse("nenhum prato foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
+            }
+            dishRepository.updateDish(dish.getId(), dish.getPrice(), dish.getActive());
+            logger.info("UpdateDish - dish updated with success");
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        } catch (NoArgs e) {
+            logger.error("UpdateDish - error trying updateDish: {}", e.getMessage());
+            return new ResponseEntity<>(new RestResponse("nenhum argumento foi passado", HttpStatus.BAD_REQUEST.value(), HttpMessages.bad_request, null), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            logger.error("UpdateDish - error trying UpdateDish: {}", e.getMessage());
             return new ResponseEntity<>(new RestResponse("server error", HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpMessages.server_error, null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
