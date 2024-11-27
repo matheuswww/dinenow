@@ -1,6 +1,7 @@
 package com.github.matheuswwwp.dinenow.controller.dish;
 
 import com.github.matheuswwwp.dinenow.DTO.dish.CreateDishDTO;
+import com.github.matheuswwwp.dinenow.DTO.dish.DeleteDishDTO;
 import com.github.matheuswwwp.dinenow.DTO.dish.UpdateDishDTO;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.CustomValidator;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.HttpMessages;
@@ -53,6 +54,12 @@ public class DishController {
         }
         var dishModel = Mapper.parseObject(data, Dish.class);
         return dishService.UpdateDish(dishModel);
+    }
+
+    @DeleteMapping(value = "/deleteDish")
+    public ResponseEntity<?> DeleteDish(@RequestBody @Valid DeleteDishDTO data) {
+        logger.info("DeleteDish - init DeleteDish");
+        return dishService.DeleteDish(data.getId());
     }
 
     @GetMapping(value = "/getAll")

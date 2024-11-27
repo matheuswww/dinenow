@@ -56,6 +56,7 @@ public class SecurityConfig {
                         authorizeHttpRequests -> authorizeHttpRequests
                                 .requestMatchers("/dish/createDish").hasAuthority("ADMIN")
                                 .requestMatchers("/dish/updateDish").hasAuthority("ADMIN")
+                                .requestMatchers("/dish/deleteDish").hasAuthority("ADMIN")
                                 .requestMatchers("/dish/getAll").permitAll()
                                 .requestMatchers("/dish/getById").permitAll()
 

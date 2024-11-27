@@ -105,4 +105,23 @@ public class DishService {
             return new ResponseEntity<>(new RestResponse("server error", HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpMessages.server_error, null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public ResponseEntity<?> DeleteDish(String id) {
+        try {
+            var uuid = UUID.fromString(id);
+            var dishRepo = dishRepository.findById(uuid);
+            if(dishRepo.isEmpty()) {
+                return new ResponseEntity<>(new RestResponse("nenhum prato foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
+            }
+            dishRepository.deleteById(uuid);
+            logger.info("DeleteDish - dish deleted with success");
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        } catch (IllegalArgumentException e) {
+            logger.error("DeleteDish - error trying DeleteDish: {}", e.getMessage());
+            return new ResponseEntity<>(new RestResponse("id inválido", HttpStatus.BAD_REQUEST.value(), HttpMessages.bad_request, null), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            logger.error("DeleteDish - error trying DeleteDish: {}", e.getMessage());
+            return new ResponseEntity<>(new RestResponse("server error", HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpMessages.server_error, null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
