@@ -41,7 +41,7 @@ public class UserAuthService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(email,password)
             );
-            var tokenResponse = tokenProvider.createAccessToken(email, List.of());
+            var tokenResponse = tokenProvider.createAccessToken(user.get().getEmail(), user.get().getId(), List.of());
             logger.info("Signin - success");
             return ResponseEntity.ok(tokenResponse);
         } catch (BadCredentialsException e) {
@@ -59,8 +59,8 @@ public class UserAuthService {
                 throw new EmailAlreadyRegistredException();
             }
             data.setPassword(passwordEncoder.encode(data.getPassword()));
-            repository.save(data);
-            var tokenResponse = tokenProvider.createAccessToken(data.getEmail(), List.of());
+            var savedData = repository.save(data);
+            var tokenResponse = tokenProvider.createAccessToken(savedData.getEmail(), savedData.getId(), List.of());
             logger.info("Signup - success");
             return ResponseEntity.status(HttpStatus.CREATED).body(tokenResponse);
         } catch (EmailAlreadyRegistredException e) {

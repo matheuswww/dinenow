@@ -2,8 +2,14 @@ package com.github.matheuswwwp.dinenow.conf.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.github.matheuswwwp.dinenow.conf.mapper.Mapper;
+import com.github.matheuswwwp.dinenow.controller.cart.CartController;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,10 +20,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.JWTVerifier;
-
+import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class JwtTokenProvider {
@@ -30,6 +37,8 @@ public class JwtTokenProvider {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    private static final Logger logger = LoggerFactory.getLogger(CartController.class);
+
     Algorithm algorithm = null;
 
     @PostConstruct
@@ -38,16 +47,17 @@ public class JwtTokenProvider {
         algorithm = Algorithm.HMAC512(secretKey.getBytes());
     }
 
-    public Token createAccessToken(String username, List<String> roles) {
+    public Token createAccessToken(String username, UUID id, List<String> roles) {
         Date now = new Date();
         var validity = new Date(now.getTime() + validityInMilliseconds);
-        var accessToken = getRefreshToken(username, roles, now, validity);
-        var refreshToken = getAccessToken(username, roles, now);
-        return new Token(username, true, accessToken, refreshToken, validity, now);
+        var accessToken = getRefreshToken(username, id.toString(), roles, now, validity);
+        var refreshToken = getAccessToken(username, id.toString(), roles, now);
+        return new Token(username, id.toString(), true, accessToken, refreshToken, validity, now);
     }
 
-    private String getAccessToken(String username, List<String> roles, Date now) {
+    private String getAccessToken(String username, String id, List<String> roles, Date now) {
         return JWT.create().
+                withClaim("user_id", id).
                 withClaim("roles", roles).
                 withIssuedAt(now).
                 withSubject(username).
@@ -55,9 +65,10 @@ public class JwtTokenProvider {
                 strip();
     }
 
-    private String getRefreshToken(String username, List<String> roles, Date now, Date validity) {
+    private String getRefreshToken(String username, String id, List<String> roles, Date now, Date validity) {
         String issueUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
         return JWT.create().
+                withClaim("user_id", id).
                 withClaim("roles", roles).
                 withIssuedAt(now).
                 withExpiresAt(validity).
@@ -98,5 +109,15 @@ public class JwtTokenProvider {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public Claims getClaimFromToken(String token) {
+      try {
+          SecretKey secret = Keys.hmacShaKeyFor(secretKey.getBytes());
+          return Mapper.parseObject(Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token).getBody(), Claims.class);
+      } catch (Exception e) {
+          logger.error("getClaimFromToken - error trying getClaimFromToken: {}", e.getMessage());
+          return null;
+      }
     }
 }

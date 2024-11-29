@@ -6,6 +6,7 @@ import java.util.Date;
 public class Token implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private String id;
     private String username;
     private Boolean authenticated;
     private Date created;
@@ -15,13 +16,22 @@ public class Token implements Serializable {
 
     public Token() {}
 
-    public Token(String username, Boolean authenticated, String accessToken, String refreshToken, Date expiration, Date created) {
+    public Token(String username, String id, Boolean authenticated, String accessToken, String refreshToken, Date expiration, Date created) {
         this.username = username;
         this.authenticated = authenticated;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.expiration = expiration;
         this.created = created;
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {

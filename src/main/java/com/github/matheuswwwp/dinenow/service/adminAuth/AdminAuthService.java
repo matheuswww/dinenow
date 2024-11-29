@@ -38,7 +38,7 @@ public class AdminAuthService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(email,password)
             );
-            var tokenResponse = tokenProvider.createAccessToken(email, List.of("ADMIN"));
+            var tokenResponse = tokenProvider.createAccessToken(admin.get().getEmail(), admin.get().getId(), List.of("ADMIN"));
             logger.info("Signin - success");
             return ResponseEntity.ok(tokenResponse);
         } catch (BadCredentialsException e) {

@@ -60,6 +60,8 @@ public class SecurityConfig {
                                 .requestMatchers("/dish/getAll").permitAll()
                                 .requestMatchers("/dish/getById").permitAll()
 
+                                .requestMatchers("/cart/createCart").authenticated()
+
                                 .requestMatchers("/user/auth/**").permitAll()
                                 .requestMatchers("/admin/auth/**").permitAll()
                                 .requestMatchers("/image/**").permitAll()

@@ -25,8 +25,6 @@ import java.util.UUID;
 @RequestMapping("/dish")
 public class DishController {
     private static final Logger logger = LoggerFactory.getLogger(DishController.class);
-    private JwtTokenProvider tokenProvider;
-
     @Autowired
     private DishService dishService;
 
