@@ -2,24 +2,37 @@ package com.github.matheuswwwp.dinenow.model.user;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    private UUID id;
     private String name;
     private String email;
     private String password;
 
-    public String getId() {
+    public User(){}
+
+    public User(UUID id, String name, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

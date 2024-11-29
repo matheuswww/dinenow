@@ -1,24 +1,28 @@
 package com.github.matheuswwwp.dinenow.model.admin;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "admin")
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    private UUID id;
     private String name;
     private String email;
     private String password;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

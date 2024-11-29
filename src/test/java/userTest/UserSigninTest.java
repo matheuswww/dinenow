@@ -18,6 +18,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 class UserSigninTest {
@@ -48,7 +49,7 @@ class UserSigninTest {
         var userRepo = new User();
         userRepo.setName("test");
         userRepo.setEmail("test@test.com");
-        userRepo.setId("test");
+        userRepo.setId(UUID.randomUUID());
         userRepo.setPassword("test");
 
         Mockito.doThrow(new BadCredentialsException("Invalid username or password"))
@@ -66,7 +67,7 @@ class UserSigninTest {
         var userRepo = new User();
         userRepo.setName("test");
         userRepo.setEmail("test@test.com");
-        userRepo.setId("test");
+        userRepo.setId(UUID.randomUUID());
         userRepo.setPassword("test");
 
         Mockito.when(repository.findByUserEmail("test@test.com")).thenReturn(Optional.of(userRepo));

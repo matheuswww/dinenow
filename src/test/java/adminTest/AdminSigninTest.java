@@ -15,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -47,7 +48,7 @@ class AdminSigninTest {
         var adminRepo = new Admin();
         adminRepo.setName("test");
         adminRepo.setEmail("test@test.com");
-        adminRepo.setId("test");
+        adminRepo.setId(UUID.randomUUID());
         adminRepo.setPassword("test");
 
         Mockito.doThrow(new BadCredentialsException("Invalid username or password"))
@@ -65,7 +66,7 @@ class AdminSigninTest {
         var adminRepo = new Admin();
         adminRepo.setName("test");
         adminRepo.setEmail("test@test.com");
-        adminRepo.setId("test");
+        adminRepo.setId(UUID.randomUUID());
         adminRepo.setPassword("test");
 
         Mockito.when(repository.findByAdminEmail("test@test.com")).thenReturn(Optional.of(adminRepo));
