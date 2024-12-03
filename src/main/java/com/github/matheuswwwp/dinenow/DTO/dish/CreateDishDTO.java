@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class CreateDishDTO {
+    @NotNull
     @Min(1)
     @Max(1000000000)
     private Float price;
@@ -15,6 +16,7 @@ public class CreateDishDTO {
     @Size(min = 2, max = 50)
     private String name;
 
+    @NotNull
     @NotBlank
     @Size(min = 2, max = 200)
     private String description;

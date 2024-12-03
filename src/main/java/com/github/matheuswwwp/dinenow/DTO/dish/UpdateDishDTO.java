@@ -2,14 +2,17 @@ package com.github.matheuswwwp.dinenow.DTO.dish;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
 public class UpdateDishDTO {
     @NotBlank
     private String id;
+    @NotNull
     @Max(1000000000)
     private Float   price;
+    @NotNull
     private Boolean active;
 
     public String getId() {

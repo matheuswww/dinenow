@@ -1,13 +1,11 @@
 package com.github.matheuswwwp.dinenow.DTO.cart;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.util.Objects;
 
 public class CreateCartDTO {
+    @NotNull
     @Min(1)
     @Max(1000000000)
     private Integer quantity;

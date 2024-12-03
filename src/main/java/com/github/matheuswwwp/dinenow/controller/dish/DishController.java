@@ -6,7 +6,6 @@ import com.github.matheuswwwp.dinenow.DTO.dish.UpdateDishDTO;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.CustomValidator;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.HttpMessages;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.RestResponse;
-import com.github.matheuswwwp.dinenow.conf.jwt.JwtTokenProvider;
 import com.github.matheuswwwp.dinenow.conf.mapper.Mapper;
 import com.github.matheuswwwp.dinenow.model.dish.Dish;
 import com.github.matheuswwwp.dinenow.service.dish.DishService;
