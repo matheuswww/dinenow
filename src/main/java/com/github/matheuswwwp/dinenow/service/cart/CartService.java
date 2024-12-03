@@ -41,7 +41,7 @@ public class CartService {
             var user_uuid = UUID.fromString(user_id);
             var dishRepo = dishRepository.findById(dish_uuid);
             var userRepo = userRepository.findById(user_uuid);
-            if(dishRepo.isEmpty()) {
+            if(dishRepo.isEmpty() || !dishRepo.get().getActive()) {
                 return new ResponseEntity<>(new RestResponse("nenhum prato foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
             }
             var price = ((dishRepo.get().getPrice()) * 100) * quantity / 100;

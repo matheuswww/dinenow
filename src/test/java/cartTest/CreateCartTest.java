@@ -38,6 +38,7 @@ public class CreateCartTest {
         var userRepo = new User(user_id, "test", "test@test.com", "test");
         var dishRepo = new Dish(dish_id, 10F, "test", "test");
         var cartRepo = new Cart(userRepo, dishRepo, 30.0F, 3);
+        dishRepo.setActive(true);
 
         Mockito.when(dishRepository.findById(dish_id)).thenReturn(Optional.of(dishRepo));
         Mockito.when(userRepository.findById(user_id)).thenReturn(Optional.of(userRepo));
@@ -53,6 +54,17 @@ public class CreateCartTest {
         var user_id = UUID.randomUUID();
         var dish_id = UUID.randomUUID();
         Mockito.when(dishRepository.findById(dish_id)).thenReturn(Optional.empty());
+        var res = service.CreateCart(3, user_id.toString(), dish_id.toString());
+        assertEquals(HttpStatus.NOT_FOUND, res.getStatusCode());
+    }
+
+    @Test
+    public void DishNotActive() {
+        var user_id = UUID.randomUUID();
+        var dish_id = UUID.randomUUID();
+        var dish = new Dish();
+        dish.setActive(false);
+        Mockito.when(dishRepository.findById(dish_id)).thenReturn(Optional.of(dish));
         var res = service.CreateCart(3, user_id.toString(), dish_id.toString());
         assertEquals(HttpStatus.NOT_FOUND, res.getStatusCode());
     }
