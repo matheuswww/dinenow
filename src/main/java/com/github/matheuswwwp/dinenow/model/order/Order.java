@@ -1,6 +1,5 @@
 package com.github.matheuswwwp.dinenow.model.order;
 
-import com.github.matheuswwwp.dinenow.model.dish.Dish;
 import com.github.matheuswwwp.dinenow.model.user.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -16,9 +15,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private UUID id;
-    private Integer price;
+    private Integer total_price;
     private Integer freight;
-    private Integer quantity;
     private String street;
     private Integer number;
     private String neighborhood;
@@ -26,13 +24,22 @@ public class Order {
     private String obs;
     private String status;
     @ManyToOne
-    @JoinColumn(name = "dish_id", nullable = false)
-    private Dish dish;
-    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Order() {}
+    public Order(){}
+
+    public Order(Integer total_price, Integer freight, String street, Integer number, String neighborhood, String complement, String obs, User user, String status) {
+        this.total_price = total_price;
+        this.freight = freight;
+        this.street = street;
+        this.number = number;
+        this.neighborhood = neighborhood;
+        this.complement = complement;
+        this.obs = obs;
+        this.user = user;
+        this.status = status;
+    }
 
     public UUID getId() {
         return id;
@@ -40,38 +47,6 @@ public class Order {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    public String getComplement() {
-        return complement;
-    }
-
-    public void setComplement(String complement) {
-        this.complement = complement;
-    }
-
-    public Dish getDish() {
-        return dish;
-    }
-
-    public void setDish(Dish dish) {
-        this.dish = dish;
     }
 
     public User getUser() {
@@ -98,12 +73,28 @@ public class Order {
         this.obs = obs;
     }
 
+    public String getComplement() {
+        return complement;
+    }
+
+    public void setComplement(String complement) {
+        this.complement = complement;
+    }
+
     public String getNeighborhood() {
         return neighborhood;
     }
 
     public void setNeighborhood(String neighborhood) {
         this.neighborhood = neighborhood;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public String getStreet() {
@@ -114,14 +105,6 @@ public class Order {
         this.street = street;
     }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
     public Integer getFreight() {
         return freight;
     }
@@ -130,15 +113,23 @@ public class Order {
         this.freight = freight;
     }
 
+    public Integer getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(Integer total_price) {
+        this.total_price = total_price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && Objects.equals(price, order.price) && Objects.equals(freight, order.freight) && Objects.equals(quantity, order.quantity) && Objects.equals(street, order.street) && Objects.equals(number, order.number) && Objects.equals(neighborhood, order.neighborhood) && Objects.equals(complement, order.complement) && Objects.equals(obs, order.obs) && Objects.equals(status, order.status) && Objects.equals(dish, order.dish) && Objects.equals(user, order.user);
+        return Objects.equals(getId(), order.getId()) && Objects.equals(getTotal_price(), order.getTotal_price()) && Objects.equals(getFreight(), order.getFreight()) && Objects.equals(getStreet(), order.getStreet()) && Objects.equals(getNumber(), order.getNumber()) && Objects.equals(getNeighborhood(), order.getNeighborhood()) && Objects.equals(getComplement(), order.getComplement()) && Objects.equals(getObs(), order.getObs()) && Objects.equals(getStatus(), order.getStatus()) && Objects.equals(getUser(), order.getUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, price, freight, quantity, street, number, neighborhood, complement, obs, status, dish, user);
+        return Objects.hash(getId(), getTotal_price(), getFreight(), getStreet(), getNumber(), getNeighborhood(), getComplement(), getObs(), getStatus(), getUser());
     }
 }

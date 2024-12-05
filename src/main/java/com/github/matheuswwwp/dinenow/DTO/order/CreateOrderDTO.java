@@ -2,21 +2,14 @@ package com.github.matheuswwwp.dinenow.DTO.order;
 
 import jakarta.validation.constraints.*;
 
+import java.util.List;
 import java.util.Objects;
 
 public class CreateOrderDTO {
     @NotNull
     @Min(1)
     @Max(1000000000)
-    private Integer price;
-    @NotNull
-    @Min(1)
-    @Max(1000000000)
-    private Integer freight;
-    @NotNull
-    @Min(1)
-    @Max(1000000000)
-    private Integer quantity;
+    private Integer total_price;
     @NotNull
     @Min(1)
     @Max(1000000000)
@@ -33,24 +26,23 @@ public class CreateOrderDTO {
     @NotBlank
     @Size(min = 2, max = 40)
     private String complement;
-    @NotBlank
-    @Size(min = 2, max = 36)
-    private String dish_id;
+    @NotNull
+    private List<Dishes> dishes;
 
-    public Integer getPrice() {
-        return price;
+    public Integer getTotal_price() {
+        return total_price;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setTotal_price(Integer total_price) {
+        this.total_price = total_price;
     }
 
-    public String getDish_id() {
-        return dish_id;
+    public List<Dishes> getDishes() {
+        return dishes;
     }
 
-    public void setDish_id(String dish_id) {
-        this.dish_id = dish_id;
+    public void setDishes(List<Dishes> dishes) {
+        this.dishes = dishes;
     }
 
     public String getComplement() {
@@ -61,14 +53,6 @@ public class CreateOrderDTO {
         this.complement = complement;
     }
 
-    public String getObs() {
-        return obs;
-    }
-
-    public void setObs(String obs) {
-        this.obs = obs;
-    }
-
     public String getStreet() {
         return street;
     }
@@ -77,28 +61,20 @@ public class CreateOrderDTO {
         this.street = street;
     }
 
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
+    }
+
     public String getNeighborhood() {
         return neighborhood;
     }
 
     public void setNeighborhood(String neighborhood) {
         this.neighborhood = neighborhood;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Integer getFreight() {
-        return freight;
-    }
-
-    public void setFreight(Integer freight) {
-        this.freight = freight;
     }
 
     public Integer getNumber() {
@@ -113,11 +89,11 @@ public class CreateOrderDTO {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CreateOrderDTO that = (CreateOrderDTO) o;
-        return Objects.equals(price, that.price) && Objects.equals(freight, that.freight) && Objects.equals(quantity, that.quantity) && Objects.equals(number, that.number) && Objects.equals(neighborhood, that.neighborhood) && Objects.equals(street, that.street) && Objects.equals(obs, that.obs) && Objects.equals(complement, that.complement) && Objects.equals(dish_id, that.dish_id);
+        return Objects.equals(getTotal_price(), that.getTotal_price()) && Objects.equals(getNumber(), that.getNumber()) && Objects.equals(getNeighborhood(), that.getNeighborhood()) && Objects.equals(getStreet(), that.getStreet()) && Objects.equals(getObs(), that.getObs()) && Objects.equals(getComplement(), that.getComplement()) && Objects.equals(getDishes(), that.getDishes());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(price, freight, quantity, number, neighborhood, street, obs, complement, dish_id);
+        return Objects.hash(getTotal_price(), getNumber(), getNeighborhood(), getStreet(), getObs(), getComplement(), getDishes());
     }
 }

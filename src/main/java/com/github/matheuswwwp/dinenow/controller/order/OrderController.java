@@ -15,11 +15,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/orderTest")
+@RequestMapping("/order")
 public class OrderController {
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
     @Autowired
@@ -43,6 +45,8 @@ public class OrderController {
             return new ResponseEntity<>(new RestResponse("server error", HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpMessages.server_error, null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         var order = Mapper.parseObject(createOrderDTO, Order.class);
-        return orderService.CreateOrder(order, createOrderDTO.getDish_id(), claims.getUser_id());
+        return orderService.CreateOrder(createOrderDTO, claims.getUser_id());
     }
+
+  
 }
