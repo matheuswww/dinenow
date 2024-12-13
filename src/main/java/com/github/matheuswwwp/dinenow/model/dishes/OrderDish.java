@@ -1,5 +1,6 @@
 package com.github.matheuswwwp.dinenow.model.dishes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.matheuswwwp.dinenow.model.order.Order;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -12,7 +13,6 @@ import java.util.UUID;
 @Table(name = "client_order_dish")
 public class OrderDish {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private UUID dish_id;
     private Integer price;
@@ -20,6 +20,7 @@ public class OrderDish {
     private String description;
     private Integer quantity;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 

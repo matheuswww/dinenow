@@ -34,7 +34,7 @@ public class DishService {
     public ResponseEntity<?> CreateDish(Dish dish, MultipartFile []file) {
         try {
             Dish dishRepo = dishRepository.save(dish);
-            String filePath = dishRepo.getId()+"/";
+            String filePath = dishRepo.getDish_id()+"/";
             return fileUpload.handle(file, filePath, "prato cadastrado porém não foi possível salvar a imagem");
         } catch (Exception e) {
             logger.error("CreateDish - error trying CreatedDish: {}", e.getMessage());
@@ -90,11 +90,11 @@ public class DishService {
             if(dish.getActive() == null && dish.getPrice() == null) {
                 throw new NoArgs();
             }
-            var dishRepo = dishRepository.findById(dish.getId());
+            var dishRepo = dishRepository.findById(dish.getDish_id());
             if(dishRepo.isEmpty()) {
                 return new ResponseEntity<>(new RestResponse("nenhum prato foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
             }
-            dishRepository.updateDish(dish.getId(), dish.getPrice(), dish.getActive());
+            dishRepository.updateDish(dish.getDish_id(), dish.getPrice(), dish.getActive());
             logger.info("UpdateDish - dish updated with success");
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (NoArgs e) {

@@ -18,14 +18,14 @@ public class GetDishImages {
 
     public void GetDishImages(List<GetDishDTO> dishes) {
         for (GetDishDTO dish: dishes) {
-            File folder = new File(path+dish.getId());
+            File folder = new File(path+dish.getDish_id());
             List<String> links = dish.getImages();
             if(folder.exists() && folder.isDirectory()) {
                 File[] files = folder.listFiles();
                 if(files != null) {
                     for (File file : files) {
                         if(file.isFile()) {
-                            var urlPath = url+"/image/"+dish.getId()+"/"+file.getName();
+                            var urlPath = url+"/image/"+dish.getDish_id()+"/"+file.getName();
                             if(dish.getImages() == null) {
                                 links = new ArrayList<>();
                             }

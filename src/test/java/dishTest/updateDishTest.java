@@ -27,7 +27,7 @@ public class updateDishTest {
     public void success() {
         var id = UUID.randomUUID();
         var dish = new Dish();
-        dish.setId(id);
+        dish.setDish_id(id);
         dish.setPrice(10F);
         dish.setActive(false);
         Mockito.when(repository.findById(id)).thenReturn(Optional.of(dish));
@@ -40,7 +40,7 @@ public class updateDishTest {
     public void noArgs() {
         var id = UUID.randomUUID();
         var dish = new Dish();
-        dish.setId(id);
+        dish.setDish_id(id);
         var res = service.UpdateDish(dish);
         assertEquals(HttpStatus.BAD_REQUEST, res.getStatusCode());
     }
@@ -49,7 +49,7 @@ public class updateDishTest {
     public void notFound() {
         var id = UUID.randomUUID();
         var dish = new Dish();
-        dish.setId(id);
+        dish.setDish_id(id);
         dish.setPrice(10F);
         dish.setActive(false);
         Mockito.when(repository.findById(id)).thenReturn(Optional.empty());

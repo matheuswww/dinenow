@@ -27,11 +27,11 @@ public class Dish {
         this.description = description;
     }
 
-    public UUID getId() {
+    public UUID getDish_id() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setDish_id(UUID id) {
         this.id = id;
     }
 

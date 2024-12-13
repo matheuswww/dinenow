@@ -19,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -70,7 +69,7 @@ public class CartService {
             }
             ArrayList<GetCartDTO> cartsDTO = new ArrayList<>();
             for(Cart cart: cartRepo) {
-                var dishRepo = dishRepository.findById(cart.getDish().getId());
+                var dishRepo = dishRepository.findById(cart.getDish().getDish_id());
                 if(dishRepo.isEmpty()) {
                     return new ResponseEntity<>(new RestResponse("nenhum prato foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
                 }

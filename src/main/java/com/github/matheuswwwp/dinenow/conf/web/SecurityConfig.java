@@ -65,7 +65,9 @@ public class SecurityConfig {
                                 .requestMatchers("/cart/updateCart").authenticated()
                                 .requestMatchers("/cart/getCart").authenticated()
 
-                                .requestMatchers("/orderTest/createOrder").authenticated()
+                                .requestMatchers("/order/createOrder").authenticated()
+
+                                .requestMatchers("/ws/**").permitAll()
 
                                 .requestMatchers("/user/auth/**").permitAll()
 

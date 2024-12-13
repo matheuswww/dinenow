@@ -6,4 +6,5 @@ public class HttpMessages {
     public static final String bad_request = "bad_request";
     public static final String server_error = "server_error";
     public static final String forbidden = "forbidden";
+    public static final String unauthorized = "unauthorized";
 }

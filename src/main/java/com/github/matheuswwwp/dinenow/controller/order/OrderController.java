@@ -5,8 +5,6 @@ import com.github.matheuswwwp.dinenow.conf.CustomValidator.CustomValidator;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.HttpMessages;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.RestResponse;
 import com.github.matheuswwwp.dinenow.conf.jwt.JwtTokenProvider;
-import com.github.matheuswwwp.dinenow.conf.mapper.Mapper;
-import com.github.matheuswwwp.dinenow.model.order.Order;
 import com.github.matheuswwwp.dinenow.service.order.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -15,8 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +27,9 @@ public class OrderController {
     private JwtTokenProvider jwtProvider;
     @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -44,9 +44,8 @@ public class OrderController {
         if(claims == null) {
             return new ResponseEntity<>(new RestResponse("server error", HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpMessages.server_error, null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        var order = Mapper.parseObject(createOrderDTO, Order.class);
+        messagingTemplate.convertAndSend("/notification/getOrderWithoutStatus", orderService.GetOrder(null, 0, 10, true));
         return orderService.CreateOrder(createOrderDTO, claims.getUser_id());
     }
 
-  
 }

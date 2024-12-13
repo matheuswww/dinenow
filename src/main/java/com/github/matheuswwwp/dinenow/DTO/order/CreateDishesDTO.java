@@ -3,7 +3,7 @@ package com.github.matheuswwwp.dinenow.DTO.order;
 import jakarta.validation.constraints.*;
 import java.util.Objects;
 
-public class Dishes {
+public class CreateDishesDTO {
     @NotBlank
     @Size(min = 2, max = 36)
     private String dish_id;
@@ -31,7 +31,7 @@ public class Dishes {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Dishes dishes = (Dishes) o;
+        CreateDishesDTO dishes = (CreateDishesDTO) o;
         return Objects.equals(getDish_id(), dishes.getDish_id()) && Objects.equals(getQuantity(), dishes.getQuantity());
     }
 

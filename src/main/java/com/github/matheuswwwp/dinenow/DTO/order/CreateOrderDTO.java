@@ -27,7 +27,7 @@ public class CreateOrderDTO {
     @Size(min = 2, max = 40)
     private String complement;
     @NotNull
-    private List<Dishes> dishes;
+    private List<CreateDishesDTO> dishes;
 
     public Integer getTotal_price() {
         return total_price;
@@ -37,11 +37,11 @@ public class CreateOrderDTO {
         this.total_price = total_price;
     }
 
-    public List<Dishes> getDishes() {
+    public List<CreateDishesDTO> getDishes() {
         return dishes;
     }
 
-    public void setDishes(List<Dishes> dishes) {
+    public void setDishes(List<CreateDishesDTO> dishes) {
         this.dishes = dishes;
     }
 

@@ -1,13 +1,13 @@
-CREATE TABLE IF NOT EXISTS `order` (
+CREATE TABLE IF NOT EXISTS `client_order` (
   `id` VARCHAR(36) PRIMARY KEY,
-  `price` INT NOT NULL,
+  `total_price` INT NOT NULL,
   `freight` INT NOT NULL,
-  `quantity` INT NOT NULL,
   `street` VARCHAR(50) NOT NULL,
   `number` INT NOT NULL,
-  `neighborhood` BIGINT NOT NULL,
+  `neighborhood` VARCHAR(60) NOT NULL,
   `obs` VARCHAR(100),
-  `status` VARCHAR(15) NOT NULL,
-  `dish_id` VARCHAR(36) NOT NULL,
-  FOREIGN KEY (`dish_id`) REFERENCES `dish` (`id`)
+  `complement` VARCHAR(40) NOT NULL,
+  `status` ENUM("waiting","preparing","route","finished"),
+  `user_id` VARCHAR(36) NOT NULL,
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 );

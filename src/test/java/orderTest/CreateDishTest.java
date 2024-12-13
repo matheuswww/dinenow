@@ -1,7 +1,7 @@
 package orderTest;
 
 import com.github.matheuswwwp.dinenow.DTO.order.CreateOrderDTO;
-import com.github.matheuswwwp.dinenow.DTO.order.Dishes;
+import com.github.matheuswwwp.dinenow.DTO.order.CreateDishesDTO;
 import com.github.matheuswwwp.dinenow.model.dish.Dish;
 import com.github.matheuswwwp.dinenow.model.dishes.OrderDish;
 import com.github.matheuswwwp.dinenow.model.order.Order;
@@ -26,7 +26,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class OrderTest {
+public class CreateDishTest {
     @InjectMocks
     private OrderService service;
 
@@ -52,7 +52,7 @@ public class OrderTest {
         dish.setActive(true);
         dish.setPrice(10F);
         orderDTO.setTotal_price(2000);
-        var dishes = new Dishes();
+        var dishes = new CreateDishesDTO();
         dishes.setDish_id(dish_id.toString());
         dishes.setQuantity(1);
         orderDTO.setDishes(List.of(dishes));
@@ -74,7 +74,7 @@ public class OrderTest {
         var user = new User();
         dish.setActive(true);
         dish.setPrice(100F);
-        var dishes = new Dishes();
+        var dishes = new CreateDishesDTO();
         dishes.setDish_id(dish_id.toString());
         dishes.setQuantity(10);
         orderDTO.setDishes(List.of(dishes));
@@ -94,7 +94,7 @@ public class OrderTest {
         var orderDTO = new CreateOrderDTO();
         var user = new User();
 
-        var dishes = new Dishes();
+        var dishes = new CreateDishesDTO();
         dishes.setDish_id(dish_id.toString());
         orderDTO.setDishes(List.of(dishes));
         Mockito.when(dishRepository.findById(UUID.fromString(dish_id))).thenReturn(Optional.empty());
@@ -113,7 +113,7 @@ public class OrderTest {
         var user = new User();
 
         dish.setActive(false);
-        var dishes = new Dishes();
+        var dishes = new CreateDishesDTO();
         dishes.setDish_id(dish_id.toString());
         orderDTO.setDishes(List.of(dishes));
         Mockito.when(dishRepository.findById(UUID.fromString(dish_id.toString()))).thenReturn(Optional.of(dish));

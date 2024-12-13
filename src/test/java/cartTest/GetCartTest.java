@@ -12,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -41,12 +40,12 @@ public class GetCartTest {
         List<Cart> cartList = new ArrayList<>();
         var cart = new Cart();
         var dish = new Dish();
-        dish.setId(UUID.randomUUID());
+        dish.setDish_id(UUID.randomUUID());
         cart.setId(UUID.randomUUID());
         cart.setDish(dish);
         cartList.add(cart);
         Mockito.when(cartRepository.findAllByUserId(user_id, PageRequest.of(0,10))).thenReturn(new PageImpl<>(cartList));
-        Mockito.when(dishRepository.findById(cart.getDish().getId())).thenReturn(Optional.of(dish));
+        Mockito.when(dishRepository.findById(cart.getDish().getDish_id())).thenReturn(Optional.of(dish));
         var res = service.GetCart(user_id.toString(), 0,10);
         assertEquals(HttpStatus.OK, res.getStatusCode());
     }
