@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `client_order` (
   `neighborhood` VARCHAR(60) NOT NULL,
   `obs` VARCHAR(100),
   `complement` VARCHAR(40) NOT NULL,
-  `status` ENUM("waiting","preparing","route","finished"),
+  `status` ENUM("waiting","preparing","route","finished") DEFAULT "waiting" NOT NULL,
   `user_id` VARCHAR(36) NOT NULL,
   FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 );

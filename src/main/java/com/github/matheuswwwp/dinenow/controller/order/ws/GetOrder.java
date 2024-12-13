@@ -1,7 +1,6 @@
 package com.github.matheuswwwp.dinenow.controller.order.ws;
 
 import com.github.matheuswwwp.dinenow.DTO.order.GetOrderReqDTO;
-import com.github.matheuswwwp.dinenow.conf.jwt.JwtTokenProvider;
 import com.github.matheuswwwp.dinenow.service.order.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,15 +16,6 @@ public class GetOrder {
     private static final Logger logger = LoggerFactory.getLogger(GetOrder.class);
     @Autowired
     private OrderService orderService;
-    @Autowired
-    private JwtTokenProvider jwtProvider;
-
-    @MessageMapping("/getOrderWithoutStatus")
-    @SendTo("/notification/getOrderWithoutStatus")
-    public ResponseEntity<?> GetOrderWithoutStatus(@Payload GetOrderReqDTO orderRequest) {
-        logger.info("GetOrderWithoutStatus - init GetOrderWithoutStatus");
-        return orderService.GetOrder(null, orderRequest.getPages(), orderRequest.getItems(), false);
-    }
 
     @MessageMapping("/getOrderWaiting")
     @SendTo("/notification/getOrderWaiting")

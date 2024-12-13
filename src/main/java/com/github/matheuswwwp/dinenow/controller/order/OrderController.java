@@ -30,7 +30,6 @@ public class OrderController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public RestResponse handleValidationException(MethodArgumentNotValidException ex) {
@@ -44,7 +43,7 @@ public class OrderController {
         if(claims == null) {
             return new ResponseEntity<>(new RestResponse("server error", HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpMessages.server_error, null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        messagingTemplate.convertAndSend("/notification/getOrderWithoutStatus", orderService.GetOrder(null, 0, 10, true));
+        messagingTemplate.convertAndSend("/notification/getOrderWaiting", orderService.GetOrder("waiting", 0, 10, true));
         return orderService.CreateOrder(createOrderDTO, claims.getUser_id());
     }
 

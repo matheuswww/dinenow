@@ -23,7 +23,7 @@ public class Order {
     private String neighborhood;
     private String complement;
     private String obs;
-    private String status;
+    private String status = "waiting";
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "user_id", nullable = false)
