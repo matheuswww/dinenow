@@ -45,6 +45,25 @@ public class OrderService {
     private GetDishImages getDishImages;
     private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
+    public ResponseEntity<?> UpdateStatus(String status, String order_id) {
+        try {
+            var order_uuid = UUID.fromString(order_id);
+            var orderRepo = orderRepository.findById(order_uuid);
+            if(orderRepo.isEmpty()) {
+                return new ResponseEntity<>(new RestResponse("nenhum pedido foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
+            }
+            orderRepository.updateStatus(order_uuid, status);
+            logger.info("UpdateStatus - success");
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        } catch (IllegalArgumentException e) {
+            logger.error("UpdateStatus - error trying UpdateStatus: {}", e.getMessage());
+            return new ResponseEntity<>(new RestResponse("id inválido", HttpStatus.BAD_REQUEST.value(), HttpMessages.bad_request, null), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            logger.error("UpdateStatus - error trying UpdateStatus: {}", e.getMessage());
+            return new ResponseEntity<>(new RestResponse("server error", HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpMessages.server_error, null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @Transactional
     public ResponseEntity<?> CreateOrder(CreateOrderDTO createOrderDTO, String user_id) {
         try {

@@ -1,6 +1,7 @@
 package com.github.matheuswwwp.dinenow.controller.order;
 
 import com.github.matheuswwwp.dinenow.DTO.order.CreateOrderDTO;
+import com.github.matheuswwwp.dinenow.DTO.order.UpdateStatusDTO;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.CustomValidator;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.HttpMessages;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.RestResponse;
@@ -45,6 +46,14 @@ public class OrderController {
         }
         messagingTemplate.convertAndSend("/notification/getOrderWaiting", orderService.GetOrder("waiting", 0, 10, true));
         return orderService.CreateOrder(createOrderDTO, claims.getUser_id());
+    }
+
+    @PatchMapping(value = "/updateStatus")
+    public ResponseEntity<?> UpdateStatus(@RequestBody @Valid UpdateStatusDTO updateStatus) {
+        logger.info("UpdateStatus - init CreateOrder");
+        var route = updateStatus.getStatus().substring(0, 1).toUpperCase() + updateStatus.getStatus().substring(1);
+        messagingTemplate.convertAndSend("/notification/getOrder"+route, orderService.GetOrder(updateStatus.getStatus(), 0, 10, true));
+        return orderService.UpdateStatus(updateStatus.getStatus(), updateStatus.getId());
     }
 
 }
