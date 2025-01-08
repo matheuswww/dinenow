@@ -12,9 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.server.ServerHttpRequest;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -56,6 +53,15 @@ public class JwtTokenProvider {
         var accessToken = getRefreshToken(username, id.toString(), roles, now, validity);
         var refreshToken = getAccessToken(username, id.toString(), roles, now);
         return new Token(username, id.toString(), true, accessToken, refreshToken, validity, now);
+    }
+
+    public Token refreshToken(String refreshToken, UUID id) {
+        if(refreshToken.contains("Bearer")) {
+            refreshToken = refreshToken.substring("Bearer ".length());
+        }
+        DecodedJWT decodedJWT = decodedToken(refreshToken);
+        List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
+        return createAccessToken(decodedJWT.getSubject(), id, roles);
     }
 
     private String getAccessToken(String username, String id, List<String> roles, Date now) {

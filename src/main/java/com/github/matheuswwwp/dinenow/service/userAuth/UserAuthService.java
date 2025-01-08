@@ -1,5 +1,6 @@
 package com.github.matheuswwwp.dinenow.service.userAuth;
 
+import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.HttpMessages;
 import com.github.matheuswwwp.dinenow.conf.jwt.JwtTokenProvider;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.RestResponse;
@@ -17,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserAuthService {
@@ -68,6 +70,18 @@ public class UserAuthService {
             return new ResponseEntity<>(new RestResponse("email já cadastrado", HttpStatus.CONFLICT.value(), HttpMessages.conflict, null), HttpStatus.CONFLICT);
         } catch(Exception e) {
             logger.error("Signup - error trying signup: {}", e.getMessage());
+            return new ResponseEntity<>(new RestResponse("server error", HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpMessages.server_error, null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<?> refreshToken(String refreshToken, String user_id) {
+        try {
+            var uuid_user_id = UUID.fromString(user_id);
+            var tokenResponse = tokenProvider.refreshToken(refreshToken, uuid_user_id);
+            logger.info("RefreshToken - success");
+            return ResponseEntity.status(HttpStatus.CREATED).body(tokenResponse);
+        } catch(Exception e) {
+            logger.error("RefreshToken - error trying refreshToken : {}", e.getMessage());
             return new ResponseEntity<>(new RestResponse("server error", HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpMessages.server_error, null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
