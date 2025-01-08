@@ -1,4 +1,5 @@
 CREATE TABLE IF NOT EXISTS `client_order_dish` (
+  `id` VARCHAR(36) PRIMARY KEY,
   `dish_id` VARCHAR(36) NOT NULL,
   `price` INT NOT NULL,
   `name` VARCHAR(50) NOT NULL,

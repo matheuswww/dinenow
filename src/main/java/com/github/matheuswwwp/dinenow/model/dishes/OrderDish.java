@@ -13,6 +13,9 @@ import java.util.UUID;
 @Table(name = "client_order_dish")
 public class OrderDish {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    private UUID id;
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private UUID dish_id;
     private Integer price;
@@ -33,6 +36,14 @@ public class OrderDish {
         this.price = price;
         this.name = name;
         this.quantity = quantity;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public UUID getDish_id() {
@@ -87,11 +98,11 @@ public class OrderDish {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         OrderDish orderDish = (OrderDish) o;
-        return Objects.equals(getDish_id(), orderDish.getDish_id()) && Objects.equals(getPrice(), orderDish.getPrice()) && Objects.equals(getName(), orderDish.getName()) && Objects.equals(getDescription(), orderDish.getDescription()) && Objects.equals(getQuantity(), orderDish.getQuantity()) && Objects.equals(getOrder(), orderDish.getOrder());
+        return Objects.equals(getId(), orderDish.getId()) && Objects.equals(getDish_id(), orderDish.getDish_id()) && Objects.equals(getPrice(), orderDish.getPrice()) && Objects.equals(getName(), orderDish.getName()) && Objects.equals(getDescription(), orderDish.getDescription()) && Objects.equals(getQuantity(), orderDish.getQuantity()) && Objects.equals(getOrder(), orderDish.getOrder());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getDish_id(), getPrice(), getName(), getDescription(), getQuantity(), getOrder());
+        return Objects.hash(getId(), getDish_id(), getPrice(), getName(), getDescription(), getQuantity(), getOrder());
     }
 }
