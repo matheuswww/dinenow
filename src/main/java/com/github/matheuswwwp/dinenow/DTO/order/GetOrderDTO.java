@@ -8,6 +8,7 @@ import java.util.Objects;
 public class GetOrderDTO {
     private List<GetOrder> order;
     private Boolean newItem;
+    private Integer totalPages;
 
     public List<GetOrder> getOrder() {
         return order;
@@ -25,15 +26,23 @@ public class GetOrderDTO {
         this.newItem = newItem;
     }
 
+    public Integer getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(Integer totalPages) {
+        this.totalPages = totalPages;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         GetOrderDTO that = (GetOrderDTO) o;
-        return Objects.equals(getOrder(), that.getOrder()) && Objects.equals(getNewItem(), that.getNewItem());
+        return Objects.equals(getOrder(), that.getOrder()) && Objects.equals(getNewItem(), that.getNewItem()) && Objects.equals(getTotalPages(), that.getTotalPages());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getOrder(), getNewItem());
+        return Objects.hash(getOrder(), getNewItem(), getTotalPages());
     }
 }

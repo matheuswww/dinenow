@@ -1,5 +1,6 @@
 package com.github.matheuswwwp.dinenow.service.dish;
 
+import com.github.matheuswwwp.dinenow.DTO.dish.DishDTO;
 import com.github.matheuswwwp.dinenow.DTO.dish.GetDishDTO;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.HttpMessages;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.RestResponse;
@@ -52,10 +53,13 @@ public class DishService {
                 return new ResponseEntity<>(new RestResponse("nenhum prato foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
             }
             var dishList = dishRepo.toList();
-            var dishDTO = Mapper.parseListObjects(dishList, GetDishDTO.class);
+            var dishDTO = Mapper.parseListObjects(dishList, DishDTO.class);
             getDishImages.GetDishImages(dishDTO);
+            var dishes = new GetDishDTO();
+            dishes.setDishes(dishDTO);
+            dishes.setTotalPages(dishRepo.getTotalPages());
             logger.info("GetAllDish - dish get with success");
-            return ResponseEntity.status(HttpStatus.OK).body(dishDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(dishes);
         } catch (PaginationExceeded e) {
             logger.error("GetAllDish - error trying GetAllDish: {}", e.getMessage());
             return new ResponseEntity<>(new RestResponse("limite de páginas ou items excedidos", HttpStatus.BAD_REQUEST.value(), HttpMessages.bad_request, null), HttpStatus.BAD_REQUEST);
@@ -71,7 +75,7 @@ public class DishService {
             if(dishRepo.isEmpty()) {
                 return new ResponseEntity<>(new RestResponse("nenhum prato foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
             }
-            var dishDTO = Mapper.parseListObjects(dishRepo.stream().toList(), GetDishDTO.class);
+            var dishDTO = Mapper.parseListObjects(dishRepo.stream().toList(), DishDTO.class);
             getDishImages.GetDishImages(dishDTO);
             logger.info("GetDishById - dish get with success");
             return ResponseEntity.status(HttpStatus.OK).body(dishDTO.get(0));

@@ -2,6 +2,7 @@ package com.github.matheuswwwp.dinenow.service.order;
 
 import com.github.matheuswwwp.dinenow.DTO.order.CreateOrderDTO;
 import com.github.matheuswwwp.dinenow.DTO.order.CreateDishesDTO;
+import com.github.matheuswwwp.dinenow.DTO.order.GetOrderByUserIdDTO;
 import com.github.matheuswwwp.dinenow.DTO.order.GetOrderDTO;
 import com.github.matheuswwwp.dinenow.DTO.order.util.GetOrder;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.HttpMessages;
@@ -119,6 +120,7 @@ public class OrderService {
             var getOrderDTO = new GetOrderDTO();
             getOrderDTO.setOrder(getOrder);
             getOrderDTO.setNewItem(newItem);
+            getOrderDTO.setTotalPages(res.getTotalPages());
             return ResponseEntity.status(HttpStatus.OK).body(getOrderDTO);
         } catch (PaginationExceeded e) {
             logger.error("GetOrder - error trying GetOrder: {}", e.getMessage());
@@ -139,10 +141,13 @@ public class OrderService {
             if(res.isEmpty()) {
                 return new ResponseEntity<>(new RestResponse("nenhum pedido foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
             }
-            var getOrderDTO = Mapper.parseListObjects(res.toList(), GetOrder.class);
-            for (GetOrder order: getOrderDTO) {
+            var getOrder = Mapper.parseListObjects(res.toList(), GetOrder.class);
+            for (GetOrder order: getOrder) {
                 getDishImages.GetDishImages(order.getDishes());
             }
+            var getOrderDTO = new GetOrderByUserIdDTO();
+            getOrderDTO.setOrders(getOrder);
+            getOrderDTO.setTotalPage(res.getTotalPages());
             logger.info("GetOrder - order get with success");
             return ResponseEntity.status(HttpStatus.OK).body(getOrderDTO);
         } catch (PaginationExceeded e) {

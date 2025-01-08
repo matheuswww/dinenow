@@ -1,7 +1,8 @@
 package com.github.matheuswwwp.dinenow.service.cart;
 
+import com.github.matheuswwwp.dinenow.DTO.cart.CartDTO;
 import com.github.matheuswwwp.dinenow.DTO.cart.GetCartDTO;
-import com.github.matheuswwwp.dinenow.DTO.dish.GetDishDTO;
+import com.github.matheuswwwp.dinenow.DTO.dish.DishDTO;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.HttpMessages;
 import com.github.matheuswwwp.dinenow.conf.CustomValidator.RestResponse;
 import com.github.matheuswwwp.dinenow.conf.exception.customException.dish.PaginationExceeded;
@@ -67,22 +68,25 @@ public class CartService {
             if (cartRepo.isEmpty()) {
                 return new ResponseEntity<>(new RestResponse("nenhum item foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
             }
-            ArrayList<GetCartDTO> cartsDTO = new ArrayList<>();
+            ArrayList<CartDTO> cartsDTO = new ArrayList<>();
             for(Cart cart: cartRepo) {
                 var dishRepo = dishRepository.findById(cart.getDish().getDish_id());
                 if(dishRepo.isEmpty()) {
                     return new ResponseEntity<>(new RestResponse("nenhum prato foi encontrado", HttpStatus.NOT_FOUND.value(), HttpMessages.not_found, null), HttpStatus.NOT_FOUND);
                 }
-                var dishDTO = Mapper.parseListObjects(dishRepo.stream().toList(), GetDishDTO.class);
+                var dishDTO = Mapper.parseListObjects(dishRepo.stream().toList(), DishDTO.class);
                 getDishImages.GetDishImages(dishDTO);
-                var cartDTO = Mapper.parseObject(dishDTO.get(0), GetCartDTO.class);
+                var cartDTO = Mapper.parseObject(dishDTO.get(0), CartDTO.class);
                 cartDTO.setCartPrice(cart.getPrice());
                 cartDTO.setQuantity(cart.getQuantity());
                 cartDTO.setCart_id(cart.getId().toString());
                 cartsDTO.add(cartDTO);
             }
+            var carts = new GetCartDTO();
+            carts.setCarts(cartsDTO);
+            carts.setTotalPages(cartRepo.getTotalPages());
             logger.info("GetCart - dish get with success");
-            return ResponseEntity.status(HttpStatus.OK).body(cartsDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(carts);
         } catch (PaginationExceeded e) {
             logger.error("GetCart - error trying GetCart: {}", e.getMessage());
             return new ResponseEntity<>(new RestResponse("limite de páginas ou items excedidos", HttpStatus.BAD_REQUEST.value(), HttpMessages.bad_request, null), HttpStatus.BAD_REQUEST);

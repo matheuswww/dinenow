@@ -1,5 +1,6 @@
 package com.github.matheuswwwp.dinenow.DTO.order.util;
 
+import com.github.matheuswwwp.dinenow.DTO.dish.DishDTO;
 import com.github.matheuswwwp.dinenow.DTO.dish.GetDishDTO;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class GetOrder {
     private String complement;
     private Float total_price;
     private Float freight;
-    private List<GetDishDTO> dishes;
+    private List<DishDTO> dishes;
 
     public String getId() {
         return id;
@@ -80,11 +81,11 @@ public class GetOrder {
         this.freight = freight;
     }
 
-    public List<GetDishDTO> getDishes() {
+    public List<DishDTO> getDishes() {
         return dishes;
     }
 
-    public void setDishes(List<GetDishDTO> dishes) {
+    public void setDishes(List<DishDTO> dishes) {
         this.dishes = dishes;
     }
 
