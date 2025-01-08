@@ -67,6 +67,7 @@ public class SecurityConfig {
 
                                 .requestMatchers("/order/createOrder").authenticated()
                                 .requestMatchers("/order/updateStatus").hasAuthority("ADMIN")
+                                .requestMatchers("/order/getOrderByUserId").authenticated()
 
                                 .requestMatchers("/ws/**").permitAll()
 

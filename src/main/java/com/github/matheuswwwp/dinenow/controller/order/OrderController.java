@@ -50,10 +50,20 @@ public class OrderController {
 
     @PatchMapping(value = "/updateStatus")
     public ResponseEntity<?> UpdateStatus(@RequestBody @Valid UpdateStatusDTO updateStatus) {
-        logger.info("UpdateStatus - init CreateOrder");
+        logger.info("UpdateStatus - init UpdateStatus");
         var route = updateStatus.getStatus().substring(0, 1).toUpperCase() + updateStatus.getStatus().substring(1);
         messagingTemplate.convertAndSend("/notification/getOrder"+route, orderService.GetOrder(updateStatus.getStatus(), 0, 10, true));
         return orderService.UpdateStatus(updateStatus.getStatus(), updateStatus.getId());
+    }
+
+    @GetMapping(value = "/getOrderByUserId")
+    public ResponseEntity<?> GetOrderByUserId(@RequestParam int pages, @RequestParam int items) {
+        logger.info("GetOrderByUserId - init CreateOrder");
+        var claims = jwtProvider.getClaimFromToken(jwtProvider.resolveToken(request));
+        if(claims == null) {
+            return new ResponseEntity<>(new RestResponse("server error", HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpMessages.server_error, null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return orderService.GetOrderByUserId(claims.getUser_id(), pages, items);
     }
 
 }
